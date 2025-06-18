@@ -18,10 +18,13 @@ function ClientsList() {
           ...doc.data(),
         }));
 
-                clientsData.sort((a, b) =>
-          a.lastName.localeCompare(b.lastName, "fr"/* , { sensitivity: "base" } */)
+        clientsData.sort((a, b) =>
+          a.lastName.localeCompare(
+            b.lastName,
+            "fr" /* , { sensitivity: "base" } */
+          )
         );
-console.log("📦 clientsData récupérés :", clientsData);
+
         setClientsData(clientsData);
       } catch (error) {
         console.error("Erreur de récupération :", error);
@@ -29,7 +32,6 @@ console.log("📦 clientsData récupérés :", clientsData);
     };
 
     fetchClients();
-    
   }, []);
   return (
     <div className="clientsListContainer">

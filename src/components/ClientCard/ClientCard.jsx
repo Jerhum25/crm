@@ -47,6 +47,9 @@ function ClientCard({
     client.classList.toggle("visible");
   }
 
+  const mailtoLink = `mailto:${mail}`;
+  const telLink = `tel:${tel}`;
+
   return (
     <div className="clientCardContainer">
       <div className="cardHeader">
@@ -79,10 +82,10 @@ function ClientCard({
         </div>
       </div>
       <div className="clientContacts">
-        <a href="mailto: contact@jhdev.fr" className="mail">
+        <a href={mailtoLink} className="mail">
           <MdOutlineAlternateEmail /> {mail}
         </a>
-        <a href="tel: 0606060606" className="tel">
+        <a href={telLink} className="tel">
           <FaMobileAlt /> {tel}
         </a>
         <div className="lastContact">
@@ -116,10 +119,10 @@ function ClientCard({
         </div>
         <div className="showClientBodyDetails">
           <p>
-            <span>Email :</span> <a href="mailto:contact@jhdev.fr">{mail}</a>
+            <span>Email :</span> <a href={mailtoLink}>{mail}</a>
           </p>
           <p>
-            <span>Téléphone :</span> <a href="tel:0606060606">{tel}</a>
+            <span>Téléphone :</span> <a href={telLink}>{tel}</a>
           </p>
           <p>
             <span>Adresse :</span> {adress}, {postCode} {city}
@@ -135,12 +138,7 @@ function ClientCard({
           </p>
           <p className="notes">
             <span>Notes :</span>
-            <textarea
-              name="notes"
-              id="notes"
-              rows={1}
-              defaultValue={notes}
-            ></textarea>
+            {notes}
           </p>
         </div>
         <div className="btns">

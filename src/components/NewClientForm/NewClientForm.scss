@@ -1,0 +1,114 @@
+.newClientFormContainer {
+  width: 30%;
+  margin: auto;
+  padding: 50px 0;
+  form {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    h2 {
+      font-size: 30px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .row {
+      display: flex;
+      gap: 30px;
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 50%;
+        label {
+          font-weight: bold;
+          position: relative;
+          &::first-letter {
+            text-transform: uppercase;
+          }
+          &[data-required]::after {
+            position: absolute;
+            content: "*";
+            color: crimson;
+            margin-left: 5px;
+          }
+        }
+        input,
+        select,
+        option,
+        textarea {
+          font-size: 16px;
+          padding: 10px;
+          font-family: roboto, arial, sans-serif;
+          border: 1px solid lightgrey;
+          border-radius: 5px;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      }
+      &.status div {
+        width: 100%;
+        select {
+          text-transform: capitalize;
+        }
+      }
+      &.address {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+
+        div {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          div {
+            flex-direction: column;
+            input {
+              width: 100%;
+            }
+          }
+          &.city {
+            gap: 30px;
+          }
+          &.street {
+            flex-direction: column;
+          }
+        }
+      }
+      &.notes div {
+        width: 100%;
+        textarea {
+          resize: none;
+        }
+      }
+    }
+    .buttons {
+      display: flex;
+      gap: 30px;
+      margin: auto;
+      .buttonContainer {
+        &:first-child button {
+          background-color: #5f62ff;
+          color: #fff;
+        }
+        button {
+          border: none;
+          text-transform: none;
+          border-radius: 5px;
+          &::first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+.appContainer {
+  font-family: Roboto, arial, sans-serif;
+  min-height: 100svh;
+  width: 100svw;
+  background-color: #f1f1f1;
+}

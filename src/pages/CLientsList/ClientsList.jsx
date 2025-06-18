@@ -5,6 +5,7 @@ import "./ClientsList.scss";
 
 import { collection, getDocs } from "firebase/firestore";
 import db from "../../firebase";
+
 function ClientsList() {
   const [clientsData, setClientsData] = useState([]);
 
@@ -20,7 +21,7 @@ function ClientsList() {
                 clientsData.sort((a, b) =>
           a.lastName.localeCompare(b.lastName, "fr"/* , { sensitivity: "base" } */)
         );
-
+console.log("📦 clientsData récupérés :", clientsData);
         setClientsData(clientsData);
       } catch (error) {
         console.error("Erreur de récupération :", error);

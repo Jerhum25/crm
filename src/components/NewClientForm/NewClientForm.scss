@@ -60,14 +60,14 @@
           text-transform: capitalize;
         }
       }
-      &.address {
+      
+      &.adress {
         display: flex;
         flex-direction: column;
         width: 100%;
         gap: 20px;
-
-        div {
-          width: 100%;
+      div {
+        width: 100%;
           display: flex;
           flex-direction: row;
           div {
@@ -109,6 +109,21 @@
           }
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .newClientFormContainer {
+    width: 100%;
+    form{
+      .row{
+        flex-direction: column;
+        div{
+          width: 100%;
+        }
+      }
+
     }
   }
 }

@@ -107,6 +107,45 @@ function Statistics() {
           </div>
         </div>
       </div>
+      <div className="lastContacts">
+  <h3>10 derniers clients contactés</h3>
+  <ul>
+    {clientsData
+      .filter((client) => client.lastContact)
+      .sort(
+        (a, b) =>
+          new Date(b.lastContact?.toDate?.() || b.lastContact) -
+          new Date(a.lastContact?.toDate?.() || a.lastContact)
+      )
+      .slice(0, 10)
+      .map((client) => (
+        <li key={client.id}>
+          <strong>{client.firstName} {client.lastName}</strong> —{" "}
+          {new Date(client.lastContact?.toDate?.() || client.lastContact).toLocaleDateString("fr-FR")} —
+          {client.notes}
+        </li>
+      ))}
+  </ul>
+</div>
+<div className="noLastContact">
+  <h3>Client(s) non contacté(s)</h3>
+  {clientsData.filter((client) => !client.lastContact).length === 0 ? (
+    <p>Tous les clients ont une date contact.</p>
+  ) : (
+    <ul>
+      {clientsData
+        .filter((client) => !client.lastContact)
+        .map((client) => (
+          <li key={client.id}>
+            <span>
+              <strong><span>{client.firstName}</span> {client.lastName}</strong> — {client.company}
+            </span>
+          </li>
+        ))}
+    </ul>
+  )}
+</div>
+
     </div>
   );
 }

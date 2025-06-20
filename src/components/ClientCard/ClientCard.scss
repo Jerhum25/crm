@@ -8,7 +8,8 @@
   width: 500px;
   border-radius: 10px;
   background-color: #fff;
-  transition: 0.2s ease-in-out;position: relative;
+  transition: 0.2s ease-in-out;
+  position: relative;
   .cardHeader {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr;
@@ -45,16 +46,20 @@
         font-weight: bold;
         font-size: 18px;
         text-transform: capitalize;
-        span{
+        span {
           text-transform: uppercase;
         }
+      }
+      .function{
+        text-transform: capitalize;
       }
     }
     .status {
       padding: 5px 10px;
       background-color: #eb6565;
       border-radius: 15px;
-      justify-self: end;text-align: center;
+      justify-self: end;
+      text-align: center;
     }
   }
   .clientContacts {
@@ -74,12 +79,16 @@
   .btns {
     display: flex;
     gap: 15px;
-    .buttonContainer:first-child button{
+    .buttonContainer:first-child button {
       background-color: #5f62ff;
       color: #fff;
     }
-    .buttonContainer button{
+    .buttonContainer button {
       border: none;
+      text-transform: none;
+      &::first-letter {
+        text-transform: capitalize;
+      }
     }
   }
   .showClient {
@@ -89,11 +98,13 @@
     background-color: #fff;
     display: none;
     flex-direction: column;
-    left: 0;margin: 15px;
+    left: 0;
+    margin: 15px;
     gap: 15px;
     padding: 25px;
     border-radius: 15px;
-    border: 1px solid lightgrey;z-index: 10;
+    border: 1px solid lightgrey;
+    z-index: 10;
     .showClientHeader {
       display: flex;
       justify-content: space-between;
@@ -135,7 +146,13 @@
       .showClientName {
         font-weight: bold;
         font-size: 18px;
+        text-transform: capitalize;
+        span{text-transform: uppercase;}
       }
+            .showClientFunction{
+        text-transform: capitalize;
+      }
+
     }
     .showClientBodyDetails {
       display: flex;
@@ -163,18 +180,58 @@
         }
       }
     }
-    .btns{
-      display: flex;justify-content: center;
+    .editClientForm {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: nowrap;
+        input,
+        textarea {
+          padding: 5px;
+          font-size: 16px;
+          min-width: 200px;
+          flex: 1;
+          border: 1px solid lightgrey;
+          border-radius: 5px;
+          resize: none;
+          font-family: roboto, arial, sans-serif;
+          &:focus {
+            border: none;
+            outline: 1px solid grey;
+          }
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        input[type="number"] {
+          -moz-appearance: textfield;
+        }
+      }
+    }
+    .btns {
+      display: flex;
+      justify-content: center;
+      .buttonContainer {
+        &[data-suppr]{
+          background-color: crimson;display: none;
+        }
+
+      }
     }
   }
-  .visible{
+  .visible {
     display: flex;
   }
 }
 
-
 @media screen and (max-width: 575px) {
-   .clientCardContainer{
+  .clientCardContainer {
     width: 100%;
-   }
+  }
 }

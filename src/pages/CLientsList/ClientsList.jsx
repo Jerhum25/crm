@@ -39,6 +39,7 @@ function ClientsList() {
       {clientsData.map((item, index) => (
         <ClientCard
           key={index}
+          id={item.id}
           firstName={item.firstName}
           lastName={item.lastName}
           company={item.company}
@@ -52,6 +53,11 @@ function ClientsList() {
           createAt={item.createAt}
           lastContact={item.lastContact}
           notes={item.notes}
+          onDelete={(id) =>
+            setClientsData((prevClients) =>
+              prevClients.filter((c) => c.id !== id)
+            )
+          }
         />
       ))}
     </div>
@@ -59,3 +65,49 @@ function ClientsList() {
 }
 
 export default ClientsList;
+
+// function ClientsList() {
+// const [clients, setClients] = useState([]);
+
+// useEffect(() => {
+//   const fetchClients = async () => {
+//     const querySnapshot = await getDocs(collection(db, "clients"));
+//     const clientsData = querySnapshot.docs.map(doc => ({
+//       id: doc.id,
+//       ...doc.data(),
+//     }));
+//     setClients(clientsData);
+//   };
+
+//   fetchClients();
+// }, []);
+
+//   return (
+//     <div className="clientsListContainer">
+//       {clients.map((item, index) => (
+//         <ClientCard
+//           key={index}
+//           clientId={item.id}
+//           firstName={item.firstName}
+//           lastName={item.lastName}
+//           company={item.company}
+//           clientFunction={item.clientFunction}
+//           clientStatus={item.clientStatus}
+//           mail={item.mail}
+//           tel={item.tel}
+//           adress={item.adress}
+//           postCode={item.postCode}
+//           city={item.city}
+//           createAt={item.createAt}
+//           lastContact={item.lastContact}
+//           notes={item.notes}
+//           onDelete={(id) =>
+//             setClients(prevClients => prevClients.filter(c => c.id !== id))
+//           }
+//         />
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default ClientsList;

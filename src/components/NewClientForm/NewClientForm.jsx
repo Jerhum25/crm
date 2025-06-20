@@ -99,7 +99,7 @@ function NewClientForm() {
         tel: "",
         company: "",
         clientFunction: "",
-        clientStatus: "prospect",
+        clientStatus: "",
         adress: "",
         postCode: "",
         city: "",
@@ -132,7 +132,7 @@ function NewClientForm() {
         tel: "",
         company: "",
         clientFunction: "",
-        clientStatus: "prospect",
+        clientStatus: "",
         adress: "",
         postCode: "",
         city: "",
@@ -239,13 +239,13 @@ function NewClientForm() {
 
         <div className="row status">
           <div>
-            <label htmlFor="status" data-required>
+            <label htmlFor="clientStatus" data-required>
               statut
             </label>
             <select
-              name="status"
-              id="status"
-              value={formData.status}
+              name="clientStatus"
+              id="clientStatus"
+              value={formData.clientStatus}
               onChange={handleChange}
               required
             >

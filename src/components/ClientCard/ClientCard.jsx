@@ -1,9 +1,13 @@
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { useState } from "react";
 import { FaMobileAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { MdClose, MdOutlineAlternateEmail } from "react-icons/md";
+import db from "../../firebase"; // ajuste le chemin selon ton projet
 import Button from "../Button/Button";
 import "./ClientCard.scss";
 
 function ClientCard({
+  clientId,
   firstName,
   lastName,
   clientFunction,
@@ -17,7 +21,26 @@ function ClientCard({
   postCode,
   city,
   notes,
+  id,
+  onDelete,
 }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName,
+    lastName,
+    clientFunction,
+    clientStatus,
+    company,
+    mail,
+    tel,
+    lastContact,
+    adress,
+    postCode,
+    city,
+    notes,
+    createAt,
+  });
+
   function openDetails(e) {
     const activeClients = document.querySelectorAll(".showClient");
     const client = e.target
@@ -35,67 +58,102 @@ function ClientCard({
     client.classList.toggle("visible");
   }
 
-  function closeDetails(e) {
-    const client = e.target
-      .closest(".clientCardContainer")
-      .querySelector(".showClient");
+  function closeDetails(e = null) {
+    let client;
+
+    if (e?.target?.closest) {
+      // Appelé depuis un événement de clic
+      client = e.target
+        .closest(".clientCardContainer")
+        ?.querySelector(".showClient");
+    } else {
+      // Appelé manuellement (comme après suppression)
+      client = document.querySelector(".showClient.visible");
+    }
+
     const clientsListContainer = document.querySelector(
       ".clientsListContainer .contrastFilter"
     );
-    clientsListContainer.classList.toggle("visible");
 
-    client.classList.toggle("visible");
+    if (clientsListContainer?.classList.contains("visible")) {
+      clientsListContainer.classList.remove("visible");
+    }
+
+    if (client?.classList.contains("visible")) {
+      client.classList.remove("visible");
+    }
+
+    setIsEditing(false);
   }
 
-  const mailtoLink = `mailto:${mail}`;
-  const telLink = `tel:${tel}`;
+  async function saveChanges() {
+    try {
+      const clientRef = doc(db, "clients", clientId);
+      await updateDoc(clientRef, formData);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Erreur de mise à jour :", error);
+    }
+  }
+
+  async function deleteClient() {
+    await deleteDoc(doc(db, "clients", id)); // Suppression dans Firebase
+    onDelete?.(id); // Met à jour la liste dans le parent
+    closeDetails(); // Masque les détails, sans événement
+  }
+
+  const telLink = `tel:${formData.tel}`;
+  const mailtoLink = `mailto:${formData.mail}`;
 
   return (
     <div className="clientCardContainer">
       <div className="cardHeader">
         <div className="initials">
-          {firstName.substr(0, 1)}
-          {lastName.substr(0, 1)}
+          {formData.firstName?.[0]}
+          {formData.lastName?.[0]}
         </div>
         <div className="clientDetails">
           <div className="name">
-            {firstName} <span>{lastName}</span>
+            {formData.firstName} <span>{formData.lastName}</span>
           </div>
           <div className="function">
-            {clientFunction} - {company}
+            {formData.clientFunction} - {formData.company}
           </div>
         </div>
         <div
           className="status"
           style={{
             backgroundColor:
-              clientStatus === "client"
+              formData.clientStatus === "client"
                 ? "#7bffa7"
-                : clientStatus === "prospect"
+                : formData.clientStatus === "prospect"
                 ? "#f8e263"
-                : clientStatus === "ancien client"
+                : formData.clientStatus === "ancien client"
                 ? "#eb6565"
                 : "none",
           }}
         >
-          {clientStatus}
+          {formData.clientStatus}
         </div>
       </div>
+
       <div className="clientContacts">
         <a href={mailtoLink} className="mail">
-          <MdOutlineAlternateEmail /> {mail}
+          <MdOutlineAlternateEmail /> {formData.mail}
         </a>
         <a href={telLink} className="tel">
-          <FaMobileAlt /> {tel}
+          <FaMobileAlt /> {formData.tel}
         </a>
         <div className="lastContact">
-          <FaRegCalendarAlt /> Dernier contact : {lastContact}
+          <FaRegCalendarAlt /> Dernier contact :{" "}
+          {formData.lastContact? new Date(formData.lastContact).toLocaleDateString("fr-FR") : "Pas encore contacté"}
         </div>
       </div>
+
       <div className="btns">
-        <Button content="voir" onClick={openDetails} />
-        <Button content="tâches" />
-        <Button content="modifier" />
+        <Button content="voir la fiche" onClick={openDetails} />
+        {/* <Button content="tâches" /> */}
+        {/* <Button content="modifier" onClick={() => setIsEditing(true)} /> */}
       </div>
 
       <div className="showClient">
@@ -105,46 +163,179 @@ function ClientCard({
             <MdClose />
           </button>
         </div>
+
         <div className="showClientBodyTop">
           <div className="showClientInitials">
-            {firstName.substr(0, 1)}
-            {lastName.substr(0, 1)}
+            {formData.firstName?.[0]}
+            {formData.lastName?.[0]}
           </div>
           <div className="showClientName">
-            {firstName} {lastName}
+            {formData.firstName} <span>{formData.lastName}</span>
           </div>
           <div className="showClientFunction">
-            {clientFunction} - {company}
+            {formData.clientFunction} - {formData.company}
           </div>
         </div>
-        <div className="showClientBodyDetails">
-          <p>
-            <span>Email :</span> <a href={mailtoLink}>{mail}</a>
-          </p>
-          <p>
-            <span>Téléphone :</span> <a href={telLink}>{tel}</a>
-          </p>
-          <p>
-            <span>Adresse :</span> {adress}, {postCode} {city}
-          </p>
-          <p>
-            <span>Statut :</span> {clientStatus}
-          </p>
-          <p>
-            <span>Créé le :</span> {createAt}
-          </p>
-          <p>
-            <span>Dernier contact le :</span> {lastContact}
-          </p>
-          <p className="notes">
-            <span>Notes :</span>
-            {notes}
-          </p>
-        </div>
+
+        {isEditing ? (
+          <div className="editClientForm">
+            <label>
+              Prénom :
+              <input
+                value={formData.firstName}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Nom :
+              <input
+                value={formData.lastName}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Fonction :
+              <input
+                value={formData.clientFunction}
+                onChange={(e) =>
+                  setFormData({ ...formData, clientFunction: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Entreprise :
+              <input
+                value={formData.company}
+                onChange={(e) =>
+                  setFormData({ ...formData, company: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Email :
+              <input
+                value={formData.mail}
+                onChange={(e) =>
+                  setFormData({ ...formData, mail: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Téléphone :
+              <input
+                value={formData.tel}
+                onChange={(e) =>
+                  setFormData({ ...formData, tel: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Adresse :
+              <input
+                value={formData.adress}
+                onChange={(e) =>
+                  setFormData({ ...formData, adress: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Code postal :
+              <input
+                value={formData.postCode}
+                onChange={(e) =>
+                  setFormData({ ...formData, postCode: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Ville :
+              <input
+                value={formData.city}
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Dernier contact :
+              <input
+                type="date"
+                value={formData.lastContact}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastContact: e.target.value })
+                }
+              />
+            </label>
+            <label>
+              Statut :
+              <select
+                value={formData.clientStatus}
+                onChange={(e) =>
+                  setFormData({ ...formData, clientStatus: e.target.value })
+                }
+              >
+                <option value="client">Client</option>
+                <option value="prospect">Prospect</option>
+                <option value="ancien client">Ancien client</option>
+              </select>
+            </label>
+            <label>
+              Notes :
+              <textarea
+                value={formData.notes}
+                onChange={(e) =>
+                  setFormData({ ...formData, notes: e.target.value })
+                }
+              />
+            </label>
+          </div>
+        ) : (
+          <div className="showClientBodyDetails">
+            <p>
+              <span>Email :</span>{" "}
+              <a href={`mailto:${formData.mail}`}>{formData.mail}</a>
+            </p>
+            <p>
+              <span>Téléphone :</span>{" "}
+              <a href={`tel:${formData.tel}`}>{formData.tel}</a>
+            </p>
+            <p>
+              <span>Adresse :</span> {formData.adress}, {formData.postCode}{" "}
+              {formData.city}
+            </p>
+            <p>
+              <span>Statut :</span> {formData.clientStatus}
+            </p>
+            <p>
+              <span>Créé le :</span> {formData.createAt}
+            </p>
+            <p>
+              <span>Dernier contact le :</span>{" "}
+              {formData.lastContact? new Date(formData.lastContact).toLocaleDateString("fr-FR") : "Pas encore contacté"}
+            </p>
+            <p className="notes">
+              <span>Notes :</span> {formData.notes}
+            </p>
+          </div>
+        )}
+
         <div className="btns">
-          <Button content="tâches" />
-          <Button content="modifier" />
-          <Button content="fermer" onClick={closeDetails} />
+          {isEditing ? (
+            <>
+              <Button content="enregistrer" onClick={saveChanges} />
+              <Button content="supprimer" data-suppr onClick={deleteClient} />
+              <Button content="annuler" onClick={() => setIsEditing(false)} />
+            </>
+          ) : (
+            <>
+              <Button content="modifier" onClick={() => setIsEditing(true)} />
+              <Button content="fermer" onClick={closeDetails} />
+            </>
+          )}
         </div>
       </div>
     </div>

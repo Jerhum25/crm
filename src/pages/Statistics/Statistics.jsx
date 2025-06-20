@@ -47,7 +47,7 @@ function Statistics() {
       <h2>statistiques</h2>
 
       <div className="clientsStats">
-        <h3>Répartition par statut </h3>
+        {/* <h3>Répartition par statut </h3>
         <p>
           <span>Total : </span>
           {clientsData.length}
@@ -105,7 +105,7 @@ function Statistics() {
           >
             {calcFormerClients}%
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="lastContacts">
   <h3>10 derniers clients contactés</h3>

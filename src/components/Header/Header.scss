@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: 100px;
-  width: 100%;
+  max-width: 100svw;
   justify-content: space-between;
   padding-inline: 100px;
   background-color: lightgrey;
@@ -40,12 +40,19 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+   .headerContainer{
+    max-width: 100svw;
+    padding-inline: 10px;
+   }
+}
+
 @media screen and (max-width: 600px) {
   .headerContainer {
     height: auto;
     flex-direction: column;
     padding: 10px;
-    gap: 15px;
+    gap: 15px;display: none;
     .logo {
       height: 50px;
       width: 50px;

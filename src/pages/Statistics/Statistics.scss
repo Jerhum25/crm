@@ -3,12 +3,18 @@
   margin-inline: auto;
   padding: 50px 0;
   display: flex;
-  flex-direction: column;gap: 20px;
+  flex-direction: column;
+  gap: 20px;
   h2 {
     text-align: center;
     margin-bottom: 50px;
     font-size: 30px;
     text-transform: uppercase;
+  }
+  h3 {
+    // margin-bottom: 1rem;
+    font-size: 20px;
+    color: #444;
   }
 
   .clientsStats,
@@ -34,23 +40,26 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    h3 {
-      font-size: 20px;
-    }
-    p {
+    .clientsStatus {
       display: flex;
-      gap: 10px;
-      align-items: center;
-      span {
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 15px;
+      gap: 50px;
+      p {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        span {
+          font-weight: bold;
+          padding: 5px 10px;
+          border-radius: 15px;
+        }
       }
     }
     .progressBar {
       height: 20px;
       width: 100%;
       border: 1px solid lightgrey;
+      border-radius: 20px;
+      overflow: hidden;
       display: flex;
       div {
         text-align: center;
@@ -58,13 +67,9 @@
     }
   }
   .lastContacts {
-
-    h3 {
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-      color: #444;
-    }
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     ul {
       list-style: none;
       padding: 0;
@@ -75,9 +80,9 @@
         padding: 0.5rem 1rem;
         border-radius: 8px;
         font-size: 0.95rem;
-        strong{
+        strong {
           text-transform: capitalize;
-          span{
+          span {
             text-transform: uppercase;
           }
         }
@@ -85,28 +90,39 @@
     }
   }
 
-.relaunchSection {
-  display: flex;flex-direction: column;
-  gap: 15px;
-  p{
-    strong{
-      text-transform: capitalize;
-      span{
-        text-transform: uppercase;
+  .relaunchSection {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #faf1c1;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        border-left: 4px solid #f8e263;
+        border-radius: 8px;
+
+        strong {
+          font-size: 16px;
+          text-transform: uppercase;
+          span {
+            text-transform: capitalize;
+          }
+        }
       }
     }
   }
-}
-
 
   .noLastContact {
-
-    h3 {
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-      color: #444;
-    }
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     ul {
       list-style: none;
       padding: 0;
@@ -128,28 +144,19 @@
             text-transform: capitalize;
           }
         }
-
-        .btnViewCard {
-          background-color: #eb6565;
-          color: white;
-          border: none;
-          padding: 0.4rem 0.8rem;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 0.85rem;
-          transition: background-color 0.2s;
-
-          &:hover {
-            background-color: #d84d4d;
-          }
-        }
       }
     }
   }
 }
 
-
 @media screen and (max-width: 768px) {
-   .statisticsContainer {
-  width: 95%;}
+  .statisticsContainer {
+    width: 95%;
+    .clientsStats {
+      .clientsStatus {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  }
 }

@@ -21,7 +21,6 @@ function ClientCard({
   postCode,
   city,
   notes,
-  id,
   onDelete,
 }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -97,8 +96,8 @@ function ClientCard({
   }
 
   async function deleteClient() {
-    await deleteDoc(doc(db, "clients", id)); // Suppression dans Firebase
-    onDelete?.(id); // Met à jour la liste dans le parent
+    await deleteDoc(doc(db, "clients", clientId)); // Suppression dans Firebase
+    onDelete?.(clientId); // Met à jour la liste dans le parent
     closeDetails(); // Masque les détails, sans événement
   }
 

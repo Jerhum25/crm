@@ -120,7 +120,7 @@ function Statistics() {
       .slice(0, 10)
       .map((client) => (
         <li key={client.id}>
-          <strong>{client.firstName} {client.lastName}</strong> —{" "}
+          <strong>{client.firstName} <span>{client.lastName}</span></strong> —{" "}
           {new Date(client.lastContact?.toDate?.() || client.lastContact).toLocaleDateString("fr-FR")} —
           {client.notes}
         </li>

@@ -39,7 +39,7 @@ function ClientsList() {
       {clientsData.map((item, index) => (
         <ClientCard
           key={index}
-          id={item.id}
+          clientId={item.id}
           firstName={item.firstName}
           lastName={item.lastName}
           company={item.company}

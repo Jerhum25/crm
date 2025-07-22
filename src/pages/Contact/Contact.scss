@@ -32,6 +32,10 @@
         border-radius: 6px;
         font-size: 1rem;
         margin-top: 5px;
+        resize: none;
+        &:focus{
+          outline: none;border: 1px solid grey;
+        }
       }
     }
 

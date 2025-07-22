@@ -1,5 +1,6 @@
 .newClientFormContainer {
   width: 30%;
+  min-width: 575px;
   margin: auto;
   padding: 50px 0;
   form {
@@ -43,7 +44,7 @@
           padding: 10px;
           font-family: roboto, arial, sans-serif;
           border: 1px solid lightgrey;
-          border-radius: 5px;
+          border-radius: 5px;width: 100%;
         }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -113,9 +114,15 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+
+// @media screen and (max-width: 1200px) {
+//    .newClientFormContainer{
+//     width: 50%;
+//    }
+// }
+@media screen and (max-width: 575px) {
   .newClientFormContainer {
-    width: 100%;
+    min-width: 100%;
     form{
       .row{
         flex-direction: column;

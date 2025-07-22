@@ -18,9 +18,7 @@ function ClientsList() {
           ...doc.data(),
         }));
 
-        clients.sort((a, b) =>
-          a.lastName.localeCompare(b.lastName, "fr")
-        );
+        clients.sort((a, b) => a.lastName.localeCompare(b.lastName, "fr"));
 
         setClientsData(clients);
       } catch (error) {
@@ -32,28 +30,32 @@ function ClientsList() {
   }, []);
 
   // Filtrage basé sur le champ de recherche
-const filteredClients = clientsData.filter((client) => {
-  const searchTerm = search
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
+  const filteredClients = clientsData.filter((client) => {
+    const searchTerm = search
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
 
-  const name = `${client.firstName || ""} ${client.lastName || ""}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    const name = `${client.firstName || ""} ${client.lastName || ""}`
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-  const company = (client.company || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-  const clientFunction = (client.clientFunction || "")
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    const company = (client.company || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    const clientFunction = (client.clientFunction || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-  return name.includes(searchTerm) || company.includes(searchTerm)|| clientFunction.includes(searchTerm);
-});
+    return (
+      name.includes(searchTerm) ||
+      company.includes(searchTerm) ||
+      clientFunction.includes(searchTerm)
+    );
+  });
 
   return (
     <div className="clientsListContainer">

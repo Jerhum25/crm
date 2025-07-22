@@ -1,8 +1,8 @@
-import './Contact.scss';
-import React, { useState } from 'react';
+import { useState } from "react";
+import "./Contact.scss";
 
 function Contact() {
-   const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
@@ -14,15 +14,24 @@ function Contact() {
     alert("Votre message a bien été envoyé.");
     setFormData({ name: "", email: "", message: "" });
   };
-   return (
-      <div className='contactContainer'>
-<h1>Contact</h1>
-      <p>Vous pouvez nous contacter via le formulaire ci-dessous ou par les moyens suivants :</p>
+  return (
+    <div className="contactContainer">
+      <h1>Contact</h1>
+      <p>
+        Vous pouvez nous contacter via le formulaire ci-dessous ou par les
+        moyens suivants :
+      </p>
 
       <ul className="contact-infos">
-        <li><strong>Email :</strong> contact@toncrm.fr</li>
-        <li><strong>Téléphone :</strong> 06 12 34 56 78</li>
-        <li><strong>Adresse :</strong> 125 rue de Verdun, 75006 PARIS, France</li>
+        <li>
+          <strong>Email :</strong> <a href="mailto:contact@moncrm.fr">contact@moncrm.fr</a>
+        </li>
+        <li>
+          <strong>Téléphone :</strong> <a href="tel:0612345678">06 12 34 56 78</a>
+        </li>
+        <li>
+          <strong>Adresse :</strong> 125 rue de Verdun, 75006 PARIS, France
+        </li>
       </ul>
 
       <form onSubmit={handleSubmit} className="contact-form">
@@ -42,7 +51,9 @@ function Contact() {
             type="email"
             required
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
           />
         </label>
 
@@ -52,7 +63,9 @@ function Contact() {
             required
             rows="5"
             value={formData.message}
-            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, message: e.target.value })
+            }
           />
         </label>
 
@@ -60,10 +73,11 @@ function Contact() {
       </form>
 
       <p className="privacy-note">
-        En soumettant ce formulaire, vous acceptez notre <a href="/privacyPolicy">politique de confidentialité</a>.
+        En soumettant ce formulaire, vous acceptez notre{" "}
+        <a href="/privacyPolicy">politique de confidentialité</a>.
       </p>
-      </div>
-   );
+    </div>
+  );
 }
 
 export default Contact;

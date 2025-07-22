@@ -97,8 +97,7 @@ function CookiesPolicy() {
       <h2>Modification de la politique</h2>
       <p>
         Cette politique de cookies peut être modifiée à tout moment pour rester
-        conforme à la législation en vigueur. Dernière mise à jour : juillet
-        2025.
+        conforme à la législation en vigueur. Dernière mise à jour : {new Date().toLocaleDateString("fr-FR", {month:"long"})} {new Date().getFullYear()}
       </p>
     </div>
   );

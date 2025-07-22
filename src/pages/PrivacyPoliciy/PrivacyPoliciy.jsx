@@ -1,6 +1,9 @@
 import "./PrivacyPoliciy.scss";
 
 function PrivacyPoliciy() {
+  const cookiesModal = document.querySelector(".cookiesContainer")
+  console.log('test',cookiesModal);
+  
   return (
     <div className="privacyPolicyContainer">
       <h1>Politique de confidentialité</h1>

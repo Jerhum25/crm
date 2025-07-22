@@ -99,7 +99,7 @@ function NewClientForm() {
         tel: "",
         company: "",
         clientFunction: "",
-        clientStatus: "",
+        clientStatus: "prospect",
         adress: "",
         postCode: "",
         city: "",
@@ -315,7 +315,7 @@ function NewClientForm() {
 
         <div className="buttons">
           <Button content="créer le contact" />
-          <Button content="annuler" />
+          {/* <Button content="annuler" onClick={()=>document.querySelector("form").reset()}/> */}
         </div>
       </form>
     </div>

@@ -4,7 +4,7 @@ import React from 'react';
 function Button({content, onClick}) {
    return (
       <div className='buttonContainer' onClick={onClick}>
-        <button >{content}</button>
+        <button>{content}</button>
       </div>
    );
 }

@@ -51,7 +51,7 @@
           text-transform: uppercase;
         }
       }
-      .function{
+      .function {
         text-transform: capitalize;
       }
     }
@@ -99,7 +99,8 @@
     background-color: #fff;
     display: none;
     flex-direction: column;
-    left: 50%;top: 50%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     margin: 15px;
     gap: 15px;
@@ -149,18 +150,19 @@
         font-weight: bold;
         font-size: 18px;
         text-transform: capitalize;
-        span{text-transform: uppercase;}
+        span {
+          text-transform: uppercase;
+        }
       }
-            .showClientFunction{
+      .showClientFunction {
         text-transform: capitalize;
       }
-
     }
     .showClientBodyDetails {
       display: flex;
       flex-direction: column;
       gap: 15px;
-            a{
+      a {
         color: #000;
       }
 
@@ -224,10 +226,10 @@
       display: flex;
       justify-content: center;
       .buttonContainer {
-        &[data-suppr]{
-          background-color: crimson;display: none;
+        button[data-suppr] {
+          background-color: crimson;
+          // display: none;
         }
-
       }
     }
   }
@@ -239,5 +241,17 @@
 @media screen and (max-width: 575px) {
   .clientCardContainer {
     width: 100%;
+    .showClient {
+      width: 90%;
+      // height: 100%;
+      // position: fixed;
+      // transform: translate(0, -50%);
+      // left: 0;
+
+      position: absolute;top: 0;left: 0;transform: translate(0);
+    }
+    .btns{
+      justify-content: space-between;
+    }
   }
 }

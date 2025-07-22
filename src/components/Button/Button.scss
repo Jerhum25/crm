@@ -5,5 +5,8 @@
     font-weight: bold;
     cursor: pointer;
     transition: .2s ease-in-out;padding: 8px 15px;border-radius: 5px;
+    &[data-suppr]{
+      background-color: crimson;
+    }
   }
 }

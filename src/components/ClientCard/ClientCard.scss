@@ -198,7 +198,7 @@
         align-items: center;
         flex-wrap: nowrap;
         input,
-        textarea {
+        textarea, select{
           padding: 5px;
           font-size: 16px;
           min-width: 200px;
@@ -210,12 +210,16 @@
           color: #000;
           &:focus {
             border: none;
-            outline: 1px solid grey;
+            border: 1px solid grey;
+            outline:none;
           }
         }
-        select, select option{
-          color: #000;
+        select::after{
+          color: red;display: none;
         }
+        // select, select option{
+        //   color: #000;font-size: 16px;flex: 1;
+        // }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;

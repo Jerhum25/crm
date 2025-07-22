@@ -45,7 +45,11 @@
           font-family: roboto, arial, sans-serif;
           border: 1px solid lightgrey;
           border-radius: 5px;width: 100%;color: #000;
-        }
+          &:focus {
+            border: none;
+            border: 1px solid grey;
+            outline:none;
+        }}
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;

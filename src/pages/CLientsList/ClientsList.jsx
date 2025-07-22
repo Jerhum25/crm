@@ -64,7 +64,7 @@ function ClientsList() {
       {/* Champ de recherche */}
       <div className="searchBar">
         <input
-          type="text"
+          type="search"
           placeholder="Rechercher par nom, fonction ou entreprise"
           value={search}
           onChange={(e) => setSearch(e.target.value)}

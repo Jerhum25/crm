@@ -214,12 +214,6 @@
             outline:none;
           }
         }
-        select::after{
-          color: red;display: none;
-        }
-        // select, select option{
-        //   color: #000;font-size: 16px;flex: 1;
-        // }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;

@@ -95,11 +95,12 @@
   .showClient {
     max-width: 400px;
     // height: 800px;
-    position: absolute;
+    position: fixed;
     background-color: #fff;
     display: none;
     flex-direction: column;
-    left: 0;
+    left: 50%;top: 50%;
+    transform: translate(-50%, -50%);
     margin: 15px;
     gap: 15px;
     padding: 25px;

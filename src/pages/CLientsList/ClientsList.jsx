@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import ClientCard from "../../components/ClientCard/ClientCard";
-// import clientsData from "../../data/clientsData.json";
 import "./ClientsList.scss";
 
 import { collection, getDocs } from "firebase/firestore";
@@ -8,24 +7,22 @@ import db from "../../firebase";
 
 function ClientsList() {
   const [clientsData, setClientsData] = useState([]);
+  const [search, setSearch] = useState(""); // Champ de recherche
 
   useEffect(() => {
     const fetchClients = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "clients"));
-        const clientsData = querySnapshot.docs.map((doc) => ({
+        const clients = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        clientsData.sort((a, b) =>
-          a.lastName.localeCompare(
-            b.lastName,
-            "fr" /* , { sensitivity: "base" } */
-          )
+        clients.sort((a, b) =>
+          a.lastName.localeCompare(b.lastName, "fr")
         );
 
-        setClientsData(clientsData);
+        setClientsData(clients);
       } catch (error) {
         console.error("Erreur de récupération :", error);
       }
@@ -33,12 +30,49 @@ function ClientsList() {
 
     fetchClients();
   }, []);
+
+  // Filtrage basé sur le champ de recherche
+const filteredClients = clientsData.filter((client) => {
+  const searchTerm = search
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
+
+  const name = `${client.firstName || ""} ${client.lastName || ""}`
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  const company = (client.company || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const clientFunction = (client.clientFunction || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  return name.includes(searchTerm) || company.includes(searchTerm)|| clientFunction.includes(searchTerm);
+});
+
   return (
     <div className="clientsListContainer">
       <div className="contrastFilter"></div>
-      {clientsData.map((item, index) => (
+
+      {/* Champ de recherche */}
+      <div className="searchBar">
+        <input
+          type="text"
+          placeholder="Rechercher par nom, fonction ou entreprise"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      {/* Liste des clients filtrés */}
+      {filteredClients.map((item) => (
         <ClientCard
-          key={index}
+          key={item.id}
           clientId={item.id}
           firstName={item.firstName}
           lastName={item.lastName}
@@ -54,9 +88,7 @@ function ClientsList() {
           lastContact={item.lastContact}
           notes={item.notes}
           onDelete={(id) =>
-            setClientsData((prevClients) =>
-              prevClients.filter((c) => c.id !== id)
-            )
+            setClientsData((prev) => prev.filter((c) => c.id !== id))
           }
         />
       ))}
@@ -65,49 +97,3 @@ function ClientsList() {
 }
 
 export default ClientsList;
-
-// function ClientsList() {
-// const [clients, setClients] = useState([]);
-
-// useEffect(() => {
-//   const fetchClients = async () => {
-//     const querySnapshot = await getDocs(collection(db, "clients"));
-//     const clientsData = querySnapshot.docs.map(doc => ({
-//       id: doc.id,
-//       ...doc.data(),
-//     }));
-//     setClients(clientsData);
-//   };
-
-//   fetchClients();
-// }, []);
-
-//   return (
-//     <div className="clientsListContainer">
-//       {clients.map((item, index) => (
-//         <ClientCard
-//           key={index}
-//           clientId={item.id}
-//           firstName={item.firstName}
-//           lastName={item.lastName}
-//           company={item.company}
-//           clientFunction={item.clientFunction}
-//           clientStatus={item.clientStatus}
-//           mail={item.mail}
-//           tel={item.tel}
-//           adress={item.adress}
-//           postCode={item.postCode}
-//           city={item.city}
-//           createAt={item.createAt}
-//           lastContact={item.lastContact}
-//           notes={item.notes}
-//           onDelete={(id) =>
-//             setClients(prevClients => prevClients.filter(c => c.id !== id))
-//           }
-//         />
-//       ))}
-//     </div>
-//   );
-// }
-
-// export default ClientsList;

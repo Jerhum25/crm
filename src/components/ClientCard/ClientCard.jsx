@@ -104,6 +104,15 @@ function ClientCard({
   const telLink = `tel:${formData.tel}`;
   const mailtoLink = `mailto:${formData.mail}`;
 
+  const formatPhone = (phone) => {
+  if (!phone) return "";
+  return phone
+    .replace(/\D/g, "")           // Enlève tout sauf les chiffres
+    .match(/.{1,2}/g)             // Regroupe tous les 2 chiffres
+    ?.join(" ")
+    .trim() || "";
+};
+
   return (
     <div className="clientCardContainer">
       <div className="cardHeader">
@@ -141,7 +150,7 @@ function ClientCard({
           <MdOutlineAlternateEmail /> {formData.mail}
         </a>
         <a href={telLink} className="tel">
-          <FaMobileAlt /> {formData.tel}
+          <FaMobileAlt /> {formatPhone(formData.tel)}
         </a>
         <div className="lastContact">
           <FaRegCalendarAlt /> Dernier contact :{" "}
@@ -216,7 +225,7 @@ function ClientCard({
             </label>
             <label>
               Email :
-              <input
+              <input type="email"
                 value={formData.mail}
                 onChange={(e) =>
                   setFormData({ ...formData, mail: e.target.value })
@@ -225,7 +234,7 @@ function ClientCard({
             </label>
             <label>
               Téléphone :
-              <input
+              <input type="tel"
                 value={formData.tel}
                 onChange={(e) =>
                   setFormData({ ...formData, tel: e.target.value })
@@ -300,7 +309,7 @@ function ClientCard({
             </p>
             <p>
               <span>Téléphone :</span>{" "}
-              <a href={`tel:${formData.tel}`}>{formData.tel}</a>
+              <a href={`tel:${formData.tel}`}>{formatPhone(formData.tel)}</a>
             </p>
             <p>
               <span>Adresse :</span> {formData.adress}, {formData.postCode}{" "}

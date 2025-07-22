@@ -95,11 +95,15 @@ function ClientCard({
     }
   }
 
-  async function deleteClient() {
-    await deleteDoc(doc(db, "clients", clientId)); // Suppression dans Firebase
-    onDelete?.(clientId); // Met à jour la liste dans le parent
-    closeDetails(); // Masque les détails, sans événement
-  }
+async function deleteClient() {
+  const confirmDelete = window.confirm("Voulez-vous vraiment supprimer ce client ?");
+
+  if (!confirmDelete) return;
+
+  await deleteDoc(doc(db, "clients", clientId)); // Suppression dans Firebase
+  onDelete?.(clientId); // Met à jour la liste dans le parent
+  closeDetails(); // Masque les détails
+}
 
   const telLink = `tel:${formData.tel}`;
   const mailtoLink = `mailto:${formData.mail}`;
@@ -335,7 +339,7 @@ function ClientCard({
           {isEditing ? (
             <>
               <Button content="enregistrer" onClick={saveChanges} />
-              <Button content="supprimer" data-suppr onClick={deleteClient} />
+              <Button content="supprimer" onClick={deleteClient} dataSuppr/>
               <Button content="annuler" onClick={() => setIsEditing(false)} />
             </>
           ) : (
